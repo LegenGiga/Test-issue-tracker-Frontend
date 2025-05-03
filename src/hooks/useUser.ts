@@ -9,6 +9,8 @@ export type UserProps = User & {
 export default function (rawApiKey?: string) {
     const [user, setUser] = useState<User | undefined>(undefined);
 
+    console.log(rawApiKey);
+
     let apiKey: string | undefined;
 
     useEffect(() => {
