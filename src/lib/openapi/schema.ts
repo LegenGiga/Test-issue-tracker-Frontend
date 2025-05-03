@@ -193,7 +193,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["profiles_assigned_issues_retrieve"];
+        /** @description List all issues assigned to the user. */
+        get: operations["profiles_assigned_issues_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -209,7 +210,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["profiles_comments_retrieve"];
+        get: operations["profiles_comments_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -225,7 +226,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["profiles_watched_issues_retrieve"];
+        /** @description List all issues watched by the user. */
+        get: operations["profiles_watched_issues_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -749,7 +751,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            201: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -771,7 +773,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            201: {
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -874,7 +876,7 @@ export interface operations {
             };
         };
     };
-    profiles_assigned_issues_retrieve: {
+    profiles_assigned_issues_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -891,12 +893,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["IssueUser"];
+                    "application/json": components["schemas"]["Issue"][];
                 };
             };
         };
     };
-    profiles_comments_retrieve: {
+    profiles_comments_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -913,12 +915,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["IssueUser"];
+                    "application/json": components["schemas"]["Comment"][];
                 };
             };
         };
     };
-    profiles_watched_issues_retrieve: {
+    profiles_watched_issues_list: {
         parameters: {
             query?: never;
             header?: never;
@@ -935,7 +937,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["IssueUser"];
+                    "application/json": components["schemas"]["Issue"][];
                 };
             };
         };

@@ -407,7 +407,7 @@ paths:
       - ApiKeyAuth: []
       - ApiKeyAuth: []
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
@@ -431,7 +431,7 @@ paths:
       - ApiKeyAuth: []
       - ApiKeyAuth: []
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
@@ -539,7 +539,8 @@ paths:
           description: ''
   /api/profiles/{id}/assigned-issues/:
     get:
-      operationId: profiles_assigned_issues_retrieve
+      operationId: profiles_assigned_issues_list
+      description: List all issues assigned to the user.
       parameters:
       - in: path
         name: id
@@ -557,11 +558,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IssueUser'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
           description: ''
   /api/profiles/{id}/comments/:
     get:
-      operationId: profiles_comments_retrieve
+      operationId: profiles_comments_list
       parameters:
       - in: path
         name: id
@@ -579,11 +582,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IssueUser'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
           description: ''
   /api/profiles/{id}/watched-issues/:
     get:
-      operationId: profiles_watched_issues_retrieve
+      operationId: profiles_watched_issues_list
+      description: List all issues watched by the user.
       parameters:
       - in: path
         name: id
@@ -601,7 +607,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IssueUser'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
           description: ''
   /api/profiles/me/:
     get:
