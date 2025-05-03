@@ -1,0 +1,1059 @@
+openapi: 3.0.3
+info:
+  title: Issue Tracker it21a
+  version: 1.0.0
+  description: API for Issue Tracker
+paths:
+  /api/attachments/:
+    get:
+      operationId: attachments_list
+      parameters:
+      - in: query
+        name: issue
+        schema:
+          type: integer
+      tags:
+      - Attachments
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
+          description: ''
+    post:
+      operationId: attachments_create
+      tags:
+      - Attachments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AttachmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AttachmentRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+          description: ''
+  /api/attachments/{id}/:
+    get:
+      operationId: attachments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this attachment.
+        required: true
+      tags:
+      - Attachments
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+          description: ''
+    delete:
+      operationId: attachments_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this attachment.
+        required: true
+      tags:
+      - Attachments
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/comments/:
+    get:
+      operationId: comments_list
+      parameters:
+      - in: query
+        name: issue
+        schema:
+          type: integer
+      - in: query
+        name: user
+        schema:
+          type: integer
+      tags:
+      - Comments
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+          description: ''
+    post:
+      operationId: comments_create
+      tags:
+      - Comments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CommentRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+  /api/comments/{id}/:
+    get:
+      operationId: comments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this comment.
+        required: true
+      tags:
+      - Comments
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+    delete:
+      operationId: comments_destroy
+      description: Can only be deleted by its creator with his associated API key
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this comment.
+        required: true
+      tags:
+      - Comments
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/issues/:
+    get:
+      operationId: issues_list
+      description: Retrieve a list of issues. Supports filtering by status, priority,
+        assignee, created_by, and search.
+      parameters:
+      - in: query
+        name: assignee
+        schema:
+          type: integer
+        description: Filter by assignee ID
+      - in: query
+        name: created_by
+        schema:
+          type: integer
+        description: Filter by creator ID
+      - in: query
+        name: order_by
+        schema:
+          type: string
+        description: 'Order by field (default: -created_at)'
+      - in: query
+        name: priority
+        schema:
+          type: string
+        description: Filter by issue priority
+      - in: query
+        name: search
+        schema:
+          type: string
+        description: Search in subject and description
+      - in: query
+        name: status
+        schema:
+          type: string
+        description: Filter by issue status
+      - in: query
+        name: watcher
+        schema:
+          type: integer
+        description: Filter by watcher ID
+      tags:
+      - Issues
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
+          description: ''
+    post:
+      operationId: issues_create
+      tags:
+      - Issues
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueRequest'
+            examples:
+              CreateIssueExample:
+                value:
+                  assignees:
+                  - 1
+                  - 2
+                  watchers:
+                  - 3
+                  subject: New Issue
+                  description: This is a test issue.
+                  deadline: '2025-05-01'
+                  type: bug
+                  severity: wishlist
+                  priority: low
+                  status: open
+                  tags:
+                  - 1
+                  - 2
+                summary: Create Issue Example
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IssueRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/IssueRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+          description: ''
+  /api/issues/{id}/:
+    get:
+      operationId: issues_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this issue.
+        required: true
+      tags:
+      - Issues
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+          description: ''
+    put:
+      operationId: issues_update
+      description: Update an issue by its ID. Supports both PUT and PATCH methods.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this issue.
+        required: true
+      tags:
+      - Issues
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IssueRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/IssueRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+          description: ''
+    patch:
+      operationId: issues_partial_update
+      description: Partially update an issue by its ID using PATCH.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this issue.
+        required: true
+      tags:
+      - Issues
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedIssueRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedIssueRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedIssueRequest'
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+          description: ''
+    delete:
+      operationId: issues_destroy
+      description: Delete an issue by its ID. Only the creator of the issue can delete
+        it.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this issue.
+        required: true
+      tags:
+      - Issues
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/issues/{id}/attachments/:
+    get:
+      operationId: issues_attachments_list
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this issue.
+        required: true
+      tags:
+      - Issues
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Attachment'
+          description: ''
+  /api/issues/{id}/comments/:
+    get:
+      operationId: issues_comments_list
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this issue.
+        required: true
+      tags:
+      - Issues
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+          description: ''
+  /api/issues/bulk/:
+    post:
+      operationId: issues_bulk_create
+      tags:
+      - Issues
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IssueBulkRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/IssueBulkRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/IssueBulkRequest'
+        required: true
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
+          description: ''
+  /api/profiles/:
+    get:
+      operationId: profiles_list
+      tags:
+      - Profiles
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IssueUser'
+          description: ''
+  /api/profiles/{id}/:
+    get:
+      operationId: profiles_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Profiles
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueUser'
+          description: ''
+    patch:
+      operationId: profiles_partial_update
+      description: The user can only be updated with its API Key
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Profiles
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedIssueUserUpdateRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedIssueUserUpdateRequest'
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueUser'
+          description: ''
+  /api/profiles/{id}/assigned-issues/:
+    get:
+      operationId: profiles_assigned_issues_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Profiles
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueUser'
+          description: ''
+  /api/profiles/{id}/comments/:
+    get:
+      operationId: profiles_comments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Profiles
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueUser'
+          description: ''
+  /api/profiles/{id}/watched-issues/:
+    get:
+      operationId: profiles_watched_issues_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - Profiles
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueUser'
+          description: ''
+  /api/schema/:
+    get:
+      operationId: schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - schema
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+components:
+  schemas:
+    Attachment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        file:
+          type: string
+          format: uri
+        issue:
+          type: integer
+      required:
+      - file
+      - issue
+    AttachmentRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+        issue:
+          type: integer
+      required:
+      - file
+      - issue
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        text:
+          type: string
+        issue:
+          type: integer
+        user:
+          type: integer
+          readOnly: true
+      required:
+      - issue
+      - text
+    CommentRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 1
+        issue:
+          type: integer
+      required:
+      - issue
+      - text
+    Issue:
+      type: object
+      properties:
+        assignees:
+          type: array
+          items:
+            type: integer
+        watchers:
+          type: array
+          items:
+            type: integer
+        subject:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        deadline:
+          type: string
+          format: date
+          nullable: true
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        severity:
+          $ref: '#/components/schemas/SeverityEnum'
+        priority:
+          $ref: '#/components/schemas/PriorityEnum'
+        status:
+          type: string
+          maxLength: 50
+        tags:
+          type: array
+          items:
+            type: integer
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/IssueUser'
+          readOnly: true
+      required:
+      - description
+      - subject
+    IssueBulkRequest:
+      type: object
+      properties:
+        subjects:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 255
+      required:
+      - subjects
+    IssueRequest:
+      type: object
+      properties:
+        assignees:
+          type: array
+          items:
+            type: integer
+        watchers:
+          type: array
+          items:
+            type: integer
+        subject:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+        deadline:
+          type: string
+          format: date
+          nullable: true
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        severity:
+          $ref: '#/components/schemas/SeverityEnum'
+        priority:
+          $ref: '#/components/schemas/PriorityEnum'
+        status:
+          type: string
+          minLength: 1
+          maxLength: 50
+        tags:
+          type: array
+          items:
+            type: integer
+      required:
+      - description
+      - subject
+    IssueUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        github_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        avatar_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        name:
+          type: string
+          nullable: true
+          maxLength: 255
+        bio:
+          type: string
+          nullable: true
+          maxLength: 1023
+        avatar:
+          type: string
+          format: uri
+          nullable: true
+      required:
+      - username
+    IssueUserRequest:
+      type: object
+      properties:
+        github_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        username:
+          type: string
+          minLength: 1
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        avatar_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        name:
+          type: string
+          nullable: true
+          maxLength: 255
+        bio:
+          type: string
+          nullable: true
+          maxLength: 1023
+        avatar:
+          type: string
+          format: binary
+          nullable: true
+      required:
+      - username
+    PatchedIssueRequest:
+      type: object
+      properties:
+        assignees:
+          type: array
+          items:
+            type: integer
+        watchers:
+          type: array
+          items:
+            type: integer
+        subject:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+          minLength: 1
+        deadline:
+          type: string
+          format: date
+          nullable: true
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        severity:
+          $ref: '#/components/schemas/SeverityEnum'
+        priority:
+          $ref: '#/components/schemas/PriorityEnum'
+        status:
+          type: string
+          minLength: 1
+          maxLength: 50
+        tags:
+          type: array
+          items:
+            type: integer
+    PatchedIssueUserUpdateRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        name:
+          type: string
+        bio:
+          type: string
+        avatar:
+          type: string
+          format: binary
+    PriorityEnum:
+      enum:
+      - low
+      - normal
+      - high
+      type: string
+      description: |-
+        * `low` - Low
+        * `normal` - Normal
+        * `high` - High
+    SeverityEnum:
+      enum:
+      - wishlist
+      - minor
+      - normal
+      - important
+      - critical
+      type: string
+      description: |-
+        * `wishlist` - Wishlist
+        * `minor` - Minor
+        * `normal` - Normal
+        * `important` - Important
+        * `critical` - Critical
+    TypeEnum:
+      enum:
+      - bug
+      - question
+      - enhancement
+      type: string
+      description: |-
+        * `bug` - Bug
+        * `question` - Question
+        * `enhancement` - Enhancement
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+servers:
+- url: http://127.0.0.1:8000
+  description: Development server
+- url: http://localhost:8000
+  description: Development server
+- url: https://issue-tracker-zi64.onrender.com
+  description: Production server

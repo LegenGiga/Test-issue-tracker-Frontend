@@ -8,10 +8,11 @@
         "build": "tsc -b && vite build",
         "lint": "eslint ./src",
         "pretty": "npx prettier ./src --write",
-        "gen": "npx openapi-typescript ./IssueTrackerit21a.yaml -o ./src/lib/openapi/schema.ts",
+        "gen": "npx openapi-typescript ./api.yaml -o ./src/lib/openapi/schema.ts",
         "preview": "vite preview"
     },
     "dependencies": {
+        "openapi-fetch": "^0.13.5",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-router": "^7.5.3"
