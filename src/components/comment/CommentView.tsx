@@ -2,10 +2,10 @@ import { Comment } from '@/lib/openapi/types';
 import './styles.css';
 
 interface CommentViewProps {
-    comment?: Comment
+    comment?: Comment;
 }
 
-export default function ({ comment }: CommentViewProps) {
+export const CommentView = function ({ comment }: CommentViewProps) {
     return (
         <div className="comment-wrapper">
             <img src="{{ comment.user.get_current_avatar_url }}" />
@@ -13,7 +13,7 @@ export default function ({ comment }: CommentViewProps) {
                 <div className="comment-header">
                     <span className="comment-name">
                         <a href="{% url 'issue_detail' issue_id=comment.issue.id %}">
-                        {comment?.id}# Missing issue data
+                            {comment?.id}# Missing issue data
                         </a>
                         Missing user comment
                     </span>
@@ -25,4 +25,6 @@ export default function ({ comment }: CommentViewProps) {
             </div>
         </div>
     );
-}
+};
+
+export default CommentView;

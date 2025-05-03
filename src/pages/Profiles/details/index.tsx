@@ -11,7 +11,7 @@ import CommentList from '@/components/comment/CommentList';
 export default function () {
     const { id } = useParams();
     const userProps = useContext(AuthContext);
-    const userComments = useComment({ userId: userProps?.id })
+    const userComments = useComment({ userId: userProps?.id });
 
     return (
         <>
@@ -26,7 +26,9 @@ export default function () {
                     <hr />
                     <div className="profile-stats">
                         <div className="stat">
-                            <span className="stat-number">{ userComments.loaded ? userComments.comments?.length : 0 }</span>
+                            <span className="stat-number">
+                                {userComments.loaded ? userComments.comments?.length : 0}
+                            </span>
                             <span className="stat-name">Open Assigned Issues</span>
                         </div>
                         <div className="stat">

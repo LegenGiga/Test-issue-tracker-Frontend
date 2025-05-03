@@ -8,15 +8,12 @@ interface CommentListProps {
     comments?: Comment[];
 }
 
-export default function ({ comments }: CommentListProps) {
-    
-    
+export const CommentList = function ({ comments }: CommentListProps) {
     return (
         <div className="comments-wrapper">
-            {
-                comments ? comments.map((comment) => <CommentView key={comment.id} comment={comment} />) 
-                : <></>
-            }
+            {comments ? comments.map((comment) => <CommentView key={comment.id} comment={comment} />) : <></>}
         </div>
     );
-}
+};
+
+export default CommentList;
