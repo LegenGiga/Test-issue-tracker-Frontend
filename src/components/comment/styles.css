@@ -1,0 +1,32 @@
+div.comment-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    border-bottom: 1px solid #e2e3e9;
+    padding: 2rem 0;
+}
+
+div.comment-wrapper > img {
+    margin-right: 1.5rem;
+    width: 60px;
+}
+
+div.comment-header {
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+div.comment-header > .comment-name {
+    color: #008aa8;
+    margin-right: 0.5rem;
+}
+
+div.comment-header > .comment-date {
+    font-size: 0.875rem;
+    color: #70728f;
+}
+
+div.comment-text > p {
+    font-size: 0.875rem;
+    color: #4c566a;
+}

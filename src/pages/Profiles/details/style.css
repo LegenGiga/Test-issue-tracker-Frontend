@@ -1,0 +1,75 @@
+hr {
+    border: 1.5px solid #bbbdcf; /* Make sure there's a border */
+    width: 90%;
+    margin: 20px 0; /* Add margin for spacing */
+}
+
+.profile-view {
+    flex: 0.23;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.profile-img {
+    height: auto;
+    width: 90%;
+}
+
+.profile-data {
+    width: 100%;
+    padding-left: 5%;
+    justify-content: left;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.profile-data > h2 {
+    font-size: 1.7rem;
+    font-weight: 500;
+    color: rgb(0, 138, 168);
+}
+
+.profile-data > h5 {
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.profile-stats {
+    color: #5a5b72;
+    display: flex;
+
+    justify-content: space-between;
+    gap: 0.125rem;
+    margin-bottom: 1.25rem;
+    padding: 1rem 0.5rem;
+}
+
+.profile-stats > .stat {
+    padding: 0 0.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+}
+
+.profile-stats > .stat > .stat-number {
+    font-size: 1.7rem;
+}
+
+.profile-stats > .stat > .stat-name {
+    font-size: 0.875rem;
+}
+
+.bio {
+    width: 100%;
+    padding-left: 5%;
+    justify-content: left;
+    margin-bottom: 1.1rem;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem;
+}

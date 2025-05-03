@@ -6,8 +6,8 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc -b && vite build",
-        "lint": "eslint .",
-        "pretty": "npx prettier . --write",
+        "lint": "eslint ./src",
+        "pretty": "npx prettier ./src --write",
         "gen": "npx openapi-typescript ./IssueTrackerit21a.yaml -o ./src/lib/openapi/schema.ts",
         "preview": "vite preview"
     },
