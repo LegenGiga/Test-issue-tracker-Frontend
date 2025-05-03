@@ -38,9 +38,9 @@ export default function () {
                         <p>bio</p>
                     </div>
                 </div>
-            </div>
-            <div className="issues-view">
-                <CommentList />
+                <div className="issues-view">
+                    <CommentList />
+                </div>
             </div>
         </>
     );

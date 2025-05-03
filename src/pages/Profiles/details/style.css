@@ -4,6 +4,12 @@ hr {
     margin: 20px 0; /* Add margin for spacing */
 }
 
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem;
+}
+
 .profile-view {
     flex: 0.23;
     display: flex;
@@ -68,8 +74,35 @@ hr {
     margin-bottom: 1.1rem;
 }
 
-.profile-container {
+.issues-view {
+    flex: 0.77;
+}
+
+.issues-view * nav {
     display: flex;
     flex-direction: row;
-    padding: 0.5rem;
+    justify-content: flex-start;
+}
+
+.tab-anchor {
+    border: 1.5px solid #e2e3e9;
+    padding: 1rem;
+    text-decoration: none;
+    color: rgb(90, 91, 114);
+}
+
+.tab-anchor:hover {
+    text-decoration: none;
+}
+
+.tab-anchor-selected {
+    border-bottom: white;
+    color: #434456;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    position: relative;
+    top: 0.2em;
 }
