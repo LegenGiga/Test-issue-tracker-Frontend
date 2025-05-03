@@ -1,15 +1,12 @@
-import { useParams } from 'react-router';
-
 import '@/main.css';
 import './style.css';
 
 import { useContext } from 'react';
-import AuthContext from '@/context/AuthContext';
+import AuthContext from '@/context/auth/AuthContext';
 import useComment from '@/hooks/useComment';
 import CommentList from '@/components/comment/CommentList';
 
-export default function () {
-    const { id } = useParams();
+export const ProfilePage = function () {
     const userProps = useContext(AuthContext);
     const userComments = useComment({ userId: userProps?.id });
 
@@ -51,4 +48,6 @@ export default function () {
             </div>
         </>
     );
-}
+};
+
+export default ProfilePage;

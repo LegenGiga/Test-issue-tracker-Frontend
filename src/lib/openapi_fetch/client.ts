@@ -14,7 +14,7 @@ const apiKeyMidddleware: Middleware = {
     async onResponse({ response }) {
         return response;
     },
-    async onError({ error }) {
+    async onError() {
         return new Error('Oops, fetch failed');
     },
 };

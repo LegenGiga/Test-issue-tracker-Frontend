@@ -7,28 +7,21 @@ export type UserProps = User & {
 };
 
 export default function (rawApiKey?: string) {
-    const [user, setUser] = useState<User | undefined>(undefined);
-
-    console.log(rawApiKey);
-
-    let apiKey: string | undefined;
+    const [userProps, setUserProps] = useState<UserProps | undefined>(undefined);
 
     useEffect(() => {
         if (rawApiKey === undefined) return;
 
-        apiKey = setClientApiKey(rawApiKey);
+        const apiKey = setClientApiKey(rawApiKey);
 
         issueTrackerClient.GET('/api/profiles/me/').then(({ data, error }) => {
             if (error) throw new Error("Profile couldn't be fetched with API key");
-            else setUser(data);
+            else setUserProps({ ...data, apiKey });
         });
     }, [rawApiKey]);
 
     return {
-        loaded: user !== undefined,
-        user: {
-            ...user,
-            apiKey,
-        } as UserProps,
+        loaded: userProps !== undefined,
+        user: userProps,
     };
 }

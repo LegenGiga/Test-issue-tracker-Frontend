@@ -35,7 +35,7 @@ export default function (fetchType: UseCommentProps) {
                     }
                 });
         }
-    }, [fetchType?.all, fetchType?.userId]);
+    }, [fetchType, fetchType?.all, fetchType?.userId]);
 
     return {
         loaded: comments !== undefined,
