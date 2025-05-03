@@ -1,12 +1,22 @@
 import '@/main.css';
 import './styles.css';
 
-import Comment from './Comment';
+import CommentView from './CommentView';
+import { Comment } from '@/lib/openapi/types';
 
-export default function () {
+interface CommentListProps {
+    comments?: Comment[];
+}
+
+export default function ({ comments }: CommentListProps) {
+    
+    
     return (
         <div className="comments-wrapper">
-            <Comment />
+            {
+                comments ? comments.map((comment) => <CommentView key={comment.id} comment={comment} />) 
+                : <></>
+            }
         </div>
     );
 }

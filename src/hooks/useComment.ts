@@ -9,7 +9,7 @@ type UseCommentProps = OneOf<{
 }>;
 
 export default function (fetchType: UseCommentProps) {
-    const [comments, setComments] = useState<Comment[] | null>(null);
+    const [comments, setComments] = useState<Comment[] | undefined>(undefined);
 
     useEffect(() => {
         if (fetchType === undefined) return;
@@ -40,7 +40,7 @@ export default function (fetchType: UseCommentProps) {
     }, [fetchType?.all, fetchType?.userId]);
 
     return {
-        loaded: comments !== null,
+        loaded: comments !== undefined,
         comments,
     }
 }

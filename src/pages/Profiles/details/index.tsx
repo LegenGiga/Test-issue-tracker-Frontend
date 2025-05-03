@@ -6,6 +6,7 @@ import './style.css';
 import { useContext } from 'react';
 import AuthContext from '@/context/AuthContext';
 import useComment from '@/hooks/useComment';
+import CommentList from '@/components/comment/CommentList';
 
 export default function () {
     const { id } = useParams();
@@ -43,6 +44,7 @@ export default function () {
                     </div>
                 </div>
                 <div className="issues-view">
+                    <CommentList comments={userComments.comments} />
                 </div>
             </div>
         </>
