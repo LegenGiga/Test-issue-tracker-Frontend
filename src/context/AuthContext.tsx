@@ -9,7 +9,7 @@ type AuthProviderProps = {
 } & PropsWithChildren; 
 
 export const AuthProvider: React.FC<AuthProviderProps> = function ({ apiKey, children }) {
-    const { loaded, user} = useUser(apiKey);
+    const { loaded, user } = useUser(apiKey);
 
     return <AuthContext.Provider value={loaded ? user : null}>
     {children}
