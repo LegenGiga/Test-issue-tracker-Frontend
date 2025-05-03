@@ -603,6 +603,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/IssueUser'
           description: ''
+  /api/profiles/me/:
+    get:
+      operationId: profiles_me_retrieve
+      tags:
+      - Profiles
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssueUser'
+          description: ''
   /api/schema/:
     get:
       operationId: schema_retrieve

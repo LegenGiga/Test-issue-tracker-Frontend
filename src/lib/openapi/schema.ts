@@ -4,30 +4,115 @@
  */
 
 export interface paths {
-    '/api/comments/': {
+    "/api/attachments/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations['comments_list'];
+        get: operations["attachments_list"];
         put?: never;
-        post: operations['comments_create'];
+        post: operations["attachments_create"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    '/api/comments/{id}/': {
+    "/api/attachments/{id}/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations['comments_retrieve'];
+        get: operations["attachments_retrieve"];
+        put?: never;
+        post?: never;
+        delete: operations["attachments_destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/comments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["comments_list"];
+        put?: never;
+        post: operations["comments_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/comments/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["comments_retrieve"];
+        put?: never;
+        post?: never;
+        /** @description Can only be deleted by its creator with his associated API key */
+        delete: operations["comments_destroy"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/issues/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Retrieve a list of issues. Supports filtering by status, priority, assignee, created_by, and search. */
+        get: operations["issues_list"];
+        put?: never;
+        post: operations["issues_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/issues/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["issues_retrieve"];
+        /** @description Update an issue by its ID. Supports both PUT and PATCH methods. */
+        put: operations["issues_update"];
+        post?: never;
+        /** @description Delete an issue by its ID. Only the creator of the issue can delete it. */
+        delete: operations["issues_destroy"];
+        options?: never;
+        head?: never;
+        /** @description Partially update an issue by its ID using PATCH. */
+        patch: operations["issues_partial_update"];
+        trace?: never;
+    };
+    "/api/issues/{id}/attachments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["issues_attachments_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -36,14 +121,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    '/api/profiles/': {
+    "/api/issues/{id}/comments/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations['profiles_list'];
+        get: operations["issues_comments_list"];
         put?: never;
         post?: never;
         delete?: never;
@@ -52,31 +137,63 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    '/api/profiles/{id}/': {
+    "/api/issues/bulk/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations['profiles_retrieve'];
+        get?: never;
+        put?: never;
+        post: operations["issues_bulk_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/profiles/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["profiles_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/profiles/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["profiles_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
         /** @description The user can only be updated with its API Key */
-        patch: operations['profiles_partial_update'];
+        patch: operations["profiles_partial_update"];
         trace?: never;
     };
-    '/api/profiles/{id}/comments/': {
+    "/api/profiles/{id}/assigned-issues/": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations['profiles_comments_retrieve'];
+        get: operations["profiles_assigned_issues_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -85,7 +202,55 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    '/api/schema/': {
+    "/api/profiles/{id}/comments/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["profiles_comments_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/profiles/{id}/watched-issues/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["profiles_watched_issues_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/profiles/me/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["profiles_me_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/schema/": {
         parameters: {
             query?: never;
             header?: never;
@@ -96,7 +261,7 @@ export interface paths {
          *
          *     - YAML: application/vnd.oai.openapi
          *     - JSON: application/vnd.oai.openapi+json */
-        get: operations['schema_retrieve'];
+        get: operations["schema_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -109,18 +274,58 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        Attachment: {
+            readonly id?: number;
+            /** Format: uri */
+            file: string;
+            issue: number;
+        };
+        AttachmentRequest: {
+            /** Format: binary */
+            file: string;
+            issue: number;
+        };
         Comment: {
             readonly id?: number;
             /** Format: date-time */
             readonly created_at?: string;
             text: string;
             issue: number;
-            user: number;
+            readonly user?: number;
         };
         CommentRequest: {
             text: string;
             issue: number;
-            user: number;
+        };
+        Issue: {
+            assignees?: number[];
+            watchers?: number[];
+            subject: string;
+            description: string;
+            /** Format: date */
+            deadline?: string | null;
+            type?: components["schemas"]["TypeEnum"];
+            severity?: components["schemas"]["SeverityEnum"];
+            priority?: components["schemas"]["PriorityEnum"];
+            status?: string;
+            tags?: number[];
+            readonly created_by?: components["schemas"]["IssueUser"];
+        };
+        IssueBulkRequest: {
+            subjects: string[];
+        };
+        IssueRequest: {
+            assignees?: number[];
+            watchers?: number[];
+            subject: string;
+            description: string;
+            /** Format: date */
+            deadline?: string | null;
+            type?: components["schemas"]["TypeEnum"];
+            severity?: components["schemas"]["SeverityEnum"];
+            priority?: components["schemas"]["PriorityEnum"];
+            status?: string;
+            tags?: number[];
         };
         IssueUser: {
             readonly id?: number;
@@ -133,6 +338,29 @@ export interface components {
             /** Format: uri */
             avatar?: string | null;
         };
+        IssueUserRequest: {
+            github_id?: string | null;
+            /** @description Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only. */
+            username: string;
+            avatar_url?: string | null;
+            name?: string | null;
+            bio?: string | null;
+            /** Format: binary */
+            avatar?: string | null;
+        };
+        PatchedIssueRequest: {
+            assignees?: number[];
+            watchers?: number[];
+            subject?: string;
+            description?: string;
+            /** Format: date */
+            deadline?: string | null;
+            type?: components["schemas"]["TypeEnum"];
+            severity?: components["schemas"]["SeverityEnum"];
+            priority?: components["schemas"]["PriorityEnum"];
+            status?: string;
+            tags?: number[];
+        };
         PatchedIssueUserUpdateRequest: {
             username?: string;
             name?: string;
@@ -140,6 +368,29 @@ export interface components {
             /** Format: binary */
             avatar?: string;
         };
+        /**
+         * @description * `low` - Low
+         *     * `normal` - Normal
+         *     * `high` - High
+         * @enum {string}
+         */
+        PriorityEnum: "low" | "normal" | "high";
+        /**
+         * @description * `wishlist` - Wishlist
+         *     * `minor` - Minor
+         *     * `normal` - Normal
+         *     * `important` - Important
+         *     * `critical` - Critical
+         * @enum {string}
+         */
+        SeverityEnum: "wishlist" | "minor" | "normal" | "important" | "critical";
+        /**
+         * @description * `bug` - Bug
+         *     * `question` - Question
+         *     * `enhancement` - Enhancement
+         * @enum {string}
+         */
+        TypeEnum: "bug" | "question" | "enhancement";
     };
     responses: never;
     parameters: never;
@@ -149,9 +400,11 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    comments_list: {
+    attachments_list: {
         parameters: {
-            query?: never;
+            query?: {
+                issue?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -163,7 +416,97 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': components['schemas']['Comment'][];
+                    "application/json": components["schemas"]["Attachment"][];
+                };
+            };
+        };
+    };
+    attachments_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttachmentRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AttachmentRequest"];
+                "multipart/form-data": components["schemas"]["AttachmentRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Attachment"];
+                };
+            };
+        };
+    };
+    attachments_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this attachment. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Attachment"];
+                };
+            };
+        };
+    };
+    attachments_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this attachment. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    comments_list: {
+        parameters: {
+            query?: {
+                issue?: number;
+                user?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Comment"][];
                 };
             };
         };
@@ -177,9 +520,9 @@ export interface operations {
         };
         requestBody: {
             content: {
-                'application/json': components['schemas']['CommentRequest'];
-                'application/x-www-form-urlencoded': components['schemas']['CommentRequest'];
-                'multipart/form-data': components['schemas']['CommentRequest'];
+                "application/json": components["schemas"]["CommentRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CommentRequest"];
+                "multipart/form-data": components["schemas"]["CommentRequest"];
             };
         };
         responses: {
@@ -188,7 +531,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': components['schemas']['Comment'];
+                    "application/json": components["schemas"]["Comment"];
                 };
             };
         };
@@ -210,7 +553,255 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': components['schemas']['Comment'];
+                    "application/json": components["schemas"]["Comment"];
+                };
+            };
+        };
+    };
+    comments_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this comment. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    issues_list: {
+        parameters: {
+            query?: {
+                /** @description Filter by assignee ID */
+                assignee?: number;
+                /** @description Filter by creator ID */
+                created_by?: number;
+                /** @description Order by field (default: -created_at) */
+                order_by?: string;
+                /** @description Filter by issue priority */
+                priority?: string;
+                /** @description Search in subject and description */
+                search?: string;
+                /** @description Filter by issue status */
+                status?: string;
+                /** @description Filter by watcher ID */
+                watcher?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Issue"][];
+                };
+            };
+        };
+    };
+    issues_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IssueRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["IssueRequest"];
+                "multipart/form-data": components["schemas"]["IssueRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Issue"];
+                };
+            };
+        };
+    };
+    issues_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this issue. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Issue"];
+                };
+            };
+        };
+    };
+    issues_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this issue. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IssueRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["IssueRequest"];
+                "multipart/form-data": components["schemas"]["IssueRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Issue"];
+                };
+            };
+        };
+    };
+    issues_destroy: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this issue. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No response body */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    issues_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this issue. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedIssueRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedIssueRequest"];
+                "multipart/form-data": components["schemas"]["PatchedIssueRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Issue"];
+                };
+            };
+        };
+    };
+    issues_attachments_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this issue. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Attachment"][];
+                };
+            };
+        };
+    };
+    issues_comments_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this issue. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Comment"][];
+                };
+            };
+        };
+    };
+    issues_bulk_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IssueBulkRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["IssueBulkRequest"];
+                "multipart/form-data": components["schemas"]["IssueBulkRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Issue"][];
                 };
             };
         };
@@ -229,7 +820,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': components['schemas']['IssueUser'][];
+                    "application/json": components["schemas"]["IssueUser"][];
                 };
             };
         };
@@ -251,7 +842,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': components['schemas']['IssueUser'];
+                    "application/json": components["schemas"]["IssueUser"];
                 };
             };
         };
@@ -268,8 +859,8 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                'multipart/form-data': components['schemas']['PatchedIssueUserUpdateRequest'];
-                'application/json': components['schemas']['PatchedIssueUserUpdateRequest'];
+                "multipart/form-data": components["schemas"]["PatchedIssueUserUpdateRequest"];
+                "application/json": components["schemas"]["PatchedIssueUserUpdateRequest"];
             };
         };
         responses: {
@@ -278,7 +869,29 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': components['schemas']['IssueUser'];
+                    "application/json": components["schemas"]["IssueUser"];
+                };
+            };
+        };
+    };
+    profiles_assigned_issues_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this user. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IssueUser"];
                 };
             };
         };
@@ -300,7 +913,48 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/json': components['schemas']['IssueUser'];
+                    "application/json": components["schemas"]["IssueUser"];
+                };
+            };
+        };
+    };
+    profiles_watched_issues_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this user. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IssueUser"];
+                };
+            };
+        };
+    };
+    profiles_me_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IssueUser"];
                 };
             };
         };
@@ -308,107 +962,8 @@ export interface operations {
     schema_retrieve: {
         parameters: {
             query?: {
-                format?: 'json' | 'yaml';
-                lang?:
-                    | 'af'
-                    | 'ar'
-                    | 'ar-dz'
-                    | 'ast'
-                    | 'az'
-                    | 'be'
-                    | 'bg'
-                    | 'bn'
-                    | 'br'
-                    | 'bs'
-                    | 'ca'
-                    | 'ckb'
-                    | 'cs'
-                    | 'cy'
-                    | 'da'
-                    | 'de'
-                    | 'dsb'
-                    | 'el'
-                    | 'en'
-                    | 'en-au'
-                    | 'en-gb'
-                    | 'eo'
-                    | 'es'
-                    | 'es-ar'
-                    | 'es-co'
-                    | 'es-mx'
-                    | 'es-ni'
-                    | 'es-ve'
-                    | 'et'
-                    | 'eu'
-                    | 'fa'
-                    | 'fi'
-                    | 'fr'
-                    | 'fy'
-                    | 'ga'
-                    | 'gd'
-                    | 'gl'
-                    | 'he'
-                    | 'hi'
-                    | 'hr'
-                    | 'hsb'
-                    | 'hu'
-                    | 'hy'
-                    | 'ia'
-                    | 'id'
-                    | 'ig'
-                    | 'io'
-                    | 'is'
-                    | 'it'
-                    | 'ja'
-                    | 'ka'
-                    | 'kab'
-                    | 'kk'
-                    | 'km'
-                    | 'kn'
-                    | 'ko'
-                    | 'ky'
-                    | 'lb'
-                    | 'lt'
-                    | 'lv'
-                    | 'mk'
-                    | 'ml'
-                    | 'mn'
-                    | 'mr'
-                    | 'ms'
-                    | 'my'
-                    | 'nb'
-                    | 'ne'
-                    | 'nl'
-                    | 'nn'
-                    | 'os'
-                    | 'pa'
-                    | 'pl'
-                    | 'pt'
-                    | 'pt-br'
-                    | 'ro'
-                    | 'ru'
-                    | 'sk'
-                    | 'sl'
-                    | 'sq'
-                    | 'sr'
-                    | 'sr-latn'
-                    | 'sv'
-                    | 'sw'
-                    | 'ta'
-                    | 'te'
-                    | 'tg'
-                    | 'th'
-                    | 'tk'
-                    | 'tr'
-                    | 'tt'
-                    | 'udm'
-                    | 'ug'
-                    | 'uk'
-                    | 'ur'
-                    | 'uz'
-                    | 'vi'
-                    | 'zh-hans'
-                    | 'zh-hant';
+                format?: "json" | "yaml";
+                lang?: "af" | "ar" | "ar-dz" | "ast" | "az" | "be" | "bg" | "bn" | "br" | "bs" | "ca" | "ckb" | "cs" | "cy" | "da" | "de" | "dsb" | "el" | "en" | "en-au" | "en-gb" | "eo" | "es" | "es-ar" | "es-co" | "es-mx" | "es-ni" | "es-ve" | "et" | "eu" | "fa" | "fi" | "fr" | "fy" | "ga" | "gd" | "gl" | "he" | "hi" | "hr" | "hsb" | "hu" | "hy" | "ia" | "id" | "ig" | "io" | "is" | "it" | "ja" | "ka" | "kab" | "kk" | "km" | "kn" | "ko" | "ky" | "lb" | "lt" | "lv" | "mk" | "ml" | "mn" | "mr" | "ms" | "my" | "nb" | "ne" | "nl" | "nn" | "os" | "pa" | "pl" | "pt" | "pt-br" | "ro" | "ru" | "sk" | "sl" | "sq" | "sr" | "sr-latn" | "sv" | "sw" | "ta" | "te" | "tg" | "th" | "tk" | "tr" | "tt" | "udm" | "ug" | "uk" | "ur" | "uz" | "vi" | "zh-hans" | "zh-hant";
             };
             header?: never;
             path?: never;
@@ -421,16 +976,16 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    'application/vnd.oai.openapi': {
+                    "application/vnd.oai.openapi": {
                         [key: string]: unknown;
                     };
-                    'application/yaml': {
+                    "application/yaml": {
                         [key: string]: unknown;
                     };
-                    'application/vnd.oai.openapi+json': {
+                    "application/vnd.oai.openapi+json": {
                         [key: string]: unknown;
                     };
-                    'application/json': {
+                    "application/json": {
                         [key: string]: unknown;
                     };
                 };
