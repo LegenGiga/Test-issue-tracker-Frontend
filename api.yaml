@@ -9,6 +9,15 @@ paths:
       operationId: attachments_list
       parameters:
       - in: query
+        name: include
+        schema:
+          type: array
+          items:
+            type: string
+        description: Indicates which attributes to expand (issue)
+        explode: true
+        style: form
+      - in: query
         name: issue
         schema:
           type: integer
@@ -62,6 +71,15 @@ paths:
           type: integer
         description: A unique integer value identifying this attachment.
         required: true
+      - in: query
+        name: include
+        schema:
+          type: array
+          items:
+            type: string
+        description: Indicates which attributes to expand (issue)
+        explode: true
+        style: form
       tags:
       - Attachments
       security:
@@ -95,6 +113,15 @@ paths:
     get:
       operationId: comments_list
       parameters:
+      - in: query
+        name: include
+        schema:
+          type: array
+          items:
+            type: string
+        description: Indicates which attributes to expand (user, issue)
+        explode: true
+        style: form
       - in: query
         name: issue
         schema:
@@ -153,6 +180,15 @@ paths:
           type: integer
         description: A unique integer value identifying this comment.
         required: true
+      - in: query
+        name: include
+        schema:
+          type: array
+          items:
+            type: string
+        description: Indicates which attributes to expand (user, issue)
+        explode: true
+        style: form
       tags:
       - Comments
       security:
@@ -952,6 +988,15 @@ components:
           type: string
           format: uri
           nullable: true
+        assigned_issues_count:
+          type: integer
+          readOnly: true
+        watched_issues_count:
+          type: integer
+          readOnly: true
+        comments_count:
+          type: integer
+          readOnly: true
       required:
       - username
     IssueUserRequest:

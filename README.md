@@ -50,7 +50,7 @@ npm run dev
 ```
 It will usually host it at `http://localhost:5137`.
 #### **Beware**  
-> In [**issue-tracker**][issue-tracker-link], it is specified at `issue_tracker/settings.py` domains are enabled for CORS at `CORS_ALLOWED_ORIGINS`. If the development server isn't in one of those domains, you can set it like this:
+> In [**issue-tracker**][issue-tracker-link], it is specified at `issue_tracker/settings.py` which URLs are enabled for CORS at `CORS_ALLOWED_ORIGINS`. If the development server isn't in one of those, you can set it like this:
 > ```bash
 >npx vite --port <port> --host <host>
 > ```
