@@ -10,12 +10,13 @@ export default function (rawApiKey?: string) {
     const [userProps, setUserProps] = useState<UserProps | undefined>(undefined);
 
     useEffect(() => {
+        
         if (rawApiKey === undefined) return;
 
         const apiKey = setClientApiKey(rawApiKey);
 
         issueTrackerClient.GET('/api/profiles/me/').then(({ data, error }) => {
-            if (error) throw new Error("Profile couldn't be fetched with API key");
+            if (error) console.log(error);
             else setUserProps({ ...data, apiKey });
         });
     }, [rawApiKey]);

@@ -1,17 +1,22 @@
 import '@/main.css';
 import './styles.css';
 
-import CommentView from './CommentView';
-import { Comment } from '@/lib/openapi/types';
+import CommentView, { DisplayMode } from './CommentView';
+import { MetaComment } from '@/lib/openapi/types';
 
 interface CommentListProps {
-    comments?: Comment[];
+    comments?: MetaComment[];
+    displayMode: DisplayMode;
 }
 
-export const CommentList = function ({ comments }: CommentListProps) {
+export const CommentList = function ({ comments, displayMode }: CommentListProps) {
     return (
         <div className="comments-wrapper">
-            {comments ? comments.map((comment) => <CommentView key={comment.id} comment={comment} />) : <></>}
+            {comments ? (
+                comments.map((comment) => <CommentView displayMode={displayMode} key={comment.id} comment={comment} />)
+            ) : (
+                <></>
+            )}
         </div>
     );
 };
