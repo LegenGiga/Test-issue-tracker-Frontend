@@ -33,7 +33,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Attachment'
+                  $ref: '#/components/schemas/MetaAttachment'
           description: ''
     post:
       operationId: attachments_create
@@ -90,7 +90,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Attachment'
+                $ref: '#/components/schemas/MetaAttachment'
           description: ''
     delete:
       operationId: attachments_destroy
@@ -142,7 +142,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Comment'
+                  $ref: '#/components/schemas/MetaComment'
           description: ''
     post:
       operationId: comments_create
@@ -199,7 +199,40 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Comment'
+                $ref: '#/components/schemas/MetaComment'
+          description: ''
+    patch:
+      operationId: comments_partial_update
+      description: The comment can only be updated with its owner API Key
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this comment.
+        required: true
+      tags:
+      - Comments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCommentUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCommentUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCommentUpdateRequest'
+      security:
+      - ApiKeyAuth: []
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentUpdate'
           description: ''
     delete:
       operationId: comments_destroy
@@ -608,6 +641,15 @@ paths:
           type: integer
         description: A unique integer value identifying this user.
         required: true
+      - in: query
+        name: include
+        schema:
+          type: array
+          items:
+            type: string
+        description: Indicates which attributes to expand (issue)
+        explode: true
+        style: form
       tags:
       - Profiles
       security:
@@ -620,7 +662,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Comment'
+                  $ref: '#/components/schemas/MetaComment'
           description: ''
   /api/profiles/{id}/watched-issues/:
     get:
@@ -866,6 +908,58 @@ components:
       required:
       - issue
       - text
+    CommentUpdate:
+      type: object
+      properties:
+        text:
+          type: string
+      required:
+      - text
+    DetailAttachment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        issue_id:
+          type: integer
+          readOnly: true
+        issue:
+          $ref: '#/components/schemas/Issue'
+        file:
+          type: string
+          format: uri
+      required:
+      - file
+      - issue
+    DetailedComment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user_id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/IssueUser'
+          nullable: true
+        issue_id:
+          type: integer
+          readOnly: true
+        issue:
+          allOf:
+          - $ref: '#/components/schemas/Issue'
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        text:
+          type: string
+      required:
+      - text
     Issue:
       type: object
       properties:
@@ -1031,6 +1125,20 @@ components:
           nullable: true
       required:
       - username
+    MetaAttachment:
+      oneOf:
+      - $ref: '#/components/schemas/Attachment'
+      - $ref: '#/components/schemas/DetailAttachment'
+    MetaComment:
+      oneOf:
+      - $ref: '#/components/schemas/Comment'
+      - $ref: '#/components/schemas/DetailedComment'
+    PatchedCommentUpdateRequest:
+      type: object
+      properties:
+        text:
+          type: string
+          minLength: 1
     PatchedIssueRequest:
       type: object
       properties:

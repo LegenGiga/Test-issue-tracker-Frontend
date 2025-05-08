@@ -66,7 +66,8 @@ export interface paths {
         delete: operations["comments_destroy"];
         options?: never;
         head?: never;
-        patch?: never;
+        /** @description The comment can only be updated with its owner API Key */
+        patch: operations["comments_partial_update"];
         trace?: never;
     };
     "/api/issues/": {
@@ -299,6 +300,26 @@ export interface components {
             text: string;
             issue: number;
         };
+        CommentUpdate: {
+            text: string;
+        };
+        DetailAttachment: {
+            readonly id?: number;
+            readonly issue_id?: number;
+            issue: components["schemas"]["Issue"];
+            /** Format: uri */
+            file: string;
+        };
+        DetailedComment: {
+            readonly id?: number;
+            readonly user_id?: number;
+            user?: components["schemas"]["IssueUser"] | null;
+            readonly issue_id?: number;
+            issue?: components["schemas"]["Issue"] | null;
+            /** Format: date-time */
+            readonly created_at?: string;
+            text: string;
+        };
         Issue: {
             assignees?: number[];
             watchers?: number[];
@@ -352,6 +373,11 @@ export interface components {
             bio?: string | null;
             /** Format: binary */
             avatar?: string | null;
+        };
+        MetaAttachment: components["schemas"]["Attachment"] | components["schemas"]["DetailAttachment"];
+        MetaComment: components["schemas"]["Comment"] | components["schemas"]["DetailedComment"];
+        PatchedCommentUpdateRequest: {
+            text?: string;
         };
         PatchedIssueRequest: {
             assignees?: number[];
@@ -423,7 +449,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Attachment"][];
+                    "application/json": components["schemas"]["MetaAttachment"][];
                 };
             };
         };
@@ -473,7 +499,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Attachment"];
+                    "application/json": components["schemas"]["MetaAttachment"];
                 };
             };
         };
@@ -518,7 +544,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Comment"][];
+                    "application/json": components["schemas"]["MetaComment"][];
                 };
             };
         };
@@ -568,7 +594,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Comment"];
+                    "application/json": components["schemas"]["MetaComment"];
                 };
             };
         };
@@ -591,6 +617,34 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    comments_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description A unique integer value identifying this comment. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedCommentUpdateRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedCommentUpdateRequest"];
+                "multipart/form-data": components["schemas"]["PatchedCommentUpdateRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommentUpdate"];
+                };
             };
         };
     };
@@ -913,7 +967,10 @@ export interface operations {
     };
     profiles_comments_list: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Indicates which attributes to expand (issue) */
+                include?: string[];
+            };
             header?: never;
             path: {
                 /** @description A unique integer value identifying this user. */
@@ -928,7 +985,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Comment"][];
+                    "application/json": components["schemas"]["MetaComment"][];
                 };
             };
         };
